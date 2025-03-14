@@ -12,9 +12,15 @@ This repository contains a Verilog implementation of matrix multiplication using
 ## File Structure
 ```
 ├── src/
-│   ├── sys.v        # Core Systolic Array module
-│   ├── pe.v    # Processing element for the array
+│   ├── SystolicArray
+│     └── sys.v        # Core Systolic Array module
+│     └── pe.v    # Processing element for the array
+│   ├──BoothMultiplier
+|     └── Radix-8-Booth-Multiplier.v # Booth Multipler Module
 ├── tb/
-│   └── tb.v     # Testbench for verification
+|   ├──Systolic Array
+│      └── tb.v     # Testbench for systolic array matmul verification
+|   ├──BoothMultiplier
+|     └── tb.v # Testbench for Booth Multiplier verification
 ├── README.md                   # Project documentation
 ```
