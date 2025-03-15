@@ -22,5 +22,6 @@ This repository contains a Verilog implementation of matrix multiplication using
 │      └── tb.v     # Testbench for systolic array matmul verification
 |   ├──BoothMultiplier
 |     └── tb.v # Testbench for Booth Multiplier verification
+|     └── verifyBoothMultiplier.py # Python script that tests the booth multiplier for exhaustive inputs
 ├── README.md                   # Project documentation
 ```
