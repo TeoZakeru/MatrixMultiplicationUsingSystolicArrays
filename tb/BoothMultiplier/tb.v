@@ -1,47 +1,104 @@
 `timescale 1ns / 1ps
 
-module tb;
+module SA_tb;
 
-    // Parameters
-    parameter N = 9;  // Change this for different bit-widths
+    parameter SIZE = 2;
+    parameter DATA_WIDTH = 8;
 
-    // Testbench Signals
-    reg signed [N-1:0] A, B;  // Inputs (Multiplicand and Multiplier)
-    wire signed [2*N-1:0] P;  // Output (Product)
-    reg clk, reset;
-    integer i, j;
-    // Instantiate the Radix-8 Booth Multiplier
-    radix8_booth_multiplier #(N) uut (
+    // Inputs
+    reg clk;
+    reg rst;
+    reg [SIZE*DATA_WIDTH-1:0] A;
+    reg [SIZE*DATA_WIDTH-1:0] B;
+    wire [SIZE*SIZE*2*DATA_WIDTH-1:0] C;
+    // Outputs
+    wire done;
+    // Instantiate the SA module
+    SystolicArray #(.SIZE(SIZE), .DATA_WIDTH(DATA_WIDTH)) uut (
+        .A(A),
+        .B(B),
         .clk(clk),
-        .reset(reset),
-        .a(A),
-        .b(B),
-        .Prod(P)
+        .rst(rst),
+        .done(done),
+        .C_out(C)
     );
-    
-    // Clock Generation
-    initial clk = 0;
+
+    // Clock generation (50% duty cycle, period = 10ns)
     always #5 clk = ~clk;
 
-    // Test Cases
+    // Task to print the output matrix
+
+    // Test procedure
     initial begin
-//        $monitor("Time = %0t | A = %d | B = %d | P = %d", $time, A, B, P);
+		clk = 0;
+        // Initialize clock and reset
+        rst = 0;
+		#1000;
+        #10 rst = 1; // Release reset after 10ns
+        // Initialize input matrices A and B (row-major order)
+        A = {8'd0, 8'd4};
+        B = {8'd0, 8'd4};
+        #10;
+        A = {8'd2, 8'd3};
+        B = {8'd3, 8'd2};
+        #10;
+        A = {8'd1, 8'd0};
+        B = {8'd1, 8'd0};
+        #10;
+        A = {8'd0, 8'd0};
+        B = {8'd0, 8'd0};
+        #10;
+        A = {8'd0, 8'd0};
+        B = {8'd0, 8'd0};
+        #10;
+        A = {8'd0, 8'd0};
+        B = {8'd0, 8'd0};
+        #10;
+        A = {8'd0, 8'd0};
+        B = {8'd0, 8'd0};
+        #10;
+        A = {8'd0, 8'd0};
+        B = {8'd0, 8'd0};
         
-        // Exhaustive Testing for all values of A and B
-        for (i = -(2**(N-4)); i < ((2**(N-4))); i = i + 1) begin
-            for (j = -(2**(N-4)); j < ((2**(N-4))); j = j + 1) begin
-                A <= i;
-                B <= j;
-                reset <= 1; 
-                #10;
-                reset <= 0;
-                #40;  // Delay to observe output
-                $display(" A = %d, B = %d, P = %d", A, B, P);                                
-            end
-        end
+//		A = {9'd0,9'd0,9'd4};
+//		B = {9'd0,9'd0,9'd6};
+//		#10;
+//		A = {9'd0,9'd16,9'd5};
+//		B = {9'd0,9'd12,9'd19};
+//		#10;
+//		A = {9'd2,9'd5,9'd7};
+//		B = {9'd2,9'd7,9'd18};
+//		#10;
+//		A = {9'd8,9'd15,9'd0};
+//		B = {9'd16,9'd2,9'd0};
+//		#10;
+//		A = {9'd4,9'd0,9'd0};
+//		B = {9'd18,9'd0,9'd0};
+//		#10;
+//		A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;
+//		A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;
+//		A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;
+//		A = {9'd0,9'd0,9'd0};
+//		B = {9'd0,9'd0,9'd0};
+//		#10;
+		
+        // Wait for computation to complete
+        wait(done);
 
-        // End Simulation
-        $finish;
+        // Print output matrix
+//        #1000;
+        #10;        
+        // End simulation
+        $stop;
     end
-
 endmodule
