@@ -17,5 +17,11 @@ module PE #(parameter DATA_WIDTH = 10)(
 			d <= b;
 		end
 	end
-	assign multi = a*b;
+//	assign multi = a*b;
+	radix8_booth_multiplier 
+	#(.N(DATA_WIDTH)) mul (
+    .a(a),  // Multiplicand
+    .b(b),  // Multiplier
+    .Prod(multi) // Product
+);
 endmodule

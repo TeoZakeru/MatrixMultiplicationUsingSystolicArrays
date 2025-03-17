@@ -1,4 +1,4 @@
-module SystolicArray #(parameter SIZE = 3, parameter DATA_WIDTH = 10)(
+module SystolicArray #(parameter SIZE = 2, parameter DATA_WIDTH = 8)(
     input [SIZE*DATA_WIDTH-1:0] A,
     input [SIZE*DATA_WIDTH-1:0] B,
     input clk,
