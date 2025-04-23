@@ -1,6 +1,6 @@
 # Factored Systolic Arrays Based on Radix-8 Multiplication 
-### This repository provides a complete Verilog implementation of the Factored Systolic Array (FSA) and the enhanced Hard-Multiple Carry-Portioned (HCP) FSA architectures
-### Fully synthesizable Verilog RTL for:
+This repository provides a complete Verilog implementation of the Factored Systolic Array (FSA) and the enhanced Hard-Multiple Carry-Portioned (HCP) FSA architectures
+Fully synthesizable Verilog RTL code for:
 
 1.) Radix-4 SA (baseline)
 
