@@ -15,3 +15,5 @@ Fully synthesizable Verilog RTL code for:
 - Testbenches with randomized inputs
 
 - Pipelined multiplier stages with Wallace tree optimization
+
+It is an implementation of the folowing paper - [**Factored Systolic Arrays Based on Radix-8 Multiplication for Machine Learning Acceleration**](https://ieeexplore.ieee.org/document/10520269)
